@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+
+    <a href="/logout">Logout</a>
+
+    <a href="/dashboard">Back to Recipes</a>
+
+<div class="main d-flex justify-content-around my-5">
+
+    <form action="/recipe/{{recipe.id}}/update" method="post"
+        class="d-flex flex-column justify-items-around align-items-start border border-black w-25 rounded bg-dark bg-gradient px-5 text-white py-3">
+        <h2 class="my-2 font-weight-bold text-info">Update Recipe</h2>
+        <label for="name">Recipe Name:</label>
+        <input type="text" class="my-2 w-100" name="name" value="{{recipe.name}}" required>
+        <label for="description">Description:</label>
+        <textarea name="description" id="" cols="30" rows="10" class="my-2 w-100"  required>{{recipe.description}}</textarea>
+        <label for="instructions">Instructions: </label>
+        <textarea name="instructions" id="" cols="30" rows="10" class="my-2 w-100"  required>{{recipe.instructions}}</textarea>
+
+        <p>  Under 30 Minutes? </p>
+        
+        <div class="d-flex align-items-center">
+        <input type="radio" class="mb-2 mx-3" name="cook_time" value = "yes" {% if recipe.cook_time == 1 %}
+            checked
+        {% endif %}> <label for="yes">Yes</label>
+        </div>
+        <div class="d-flex align-items-center">
+        <input type="radio" class="my-2 mx-3" name="cook_time" value ="no" {% if recipe.cook_time == 0 %}
+        checked
+    {% endif %} ><label for="no">No</label>
+        </div>
+        
+        <label for="created_at" class="my-2">Date Made/Created: </label>
+        <input type="date" class="my-2 w-100" name="created_at" value={{recipe.created_at}} required>
+
+        <button class="btn btn-info my-3">Update Recipe</button>
+        {% with messages = get_flashed_messages(category_filter=["recipe"]) %}
+        {% if messages %}
+        <div class="bg-danger bg-opacity-50 border border-danger px-3 py-0 rounded">
+            {% for message in messages %}
+            <p class="text-danger py-0 mb-0">{{message}}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+    </form>
+
+</div>
+
+</body>
+</html>
